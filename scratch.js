@@ -1,214 +1,369 @@
-// Concepts for the React Class
-// 1) Functions calling other functions
-// 3) Passing parameters and returning
-// 3) Arrays of objects or other combinations of objects and arrays
-// 4) Arrow functions (making functions)
-// 5) Looping over arrays of objects
-// 6) Boolean logic (using <=, &&, ||)
-// 7) JSON is one way we can format data (we can turn things back and forth from JSON)
-// 8) try-catch is a thing and it has a format that I can look up
-// 9) validation is a thing that we do a lot as developers
+
+// ARRAY = LIST
+
+const listOfFriends = ["Dawn", "Mayank", "Steve"]
+// listOfFriends is a const variable with an array in it
+
+// Access info in an array
+listOfFriends[2] // Steve
+
+listOfFriends[1] += " Saxena"
+
+// Arrays are sandwiches
+// [] pieces of bread
+// Arrays have an order and indexes
+
+const sandwich = ["mayo", "tomato", "bacon"]
 
 
 
+// OBJECT = THING
+
+let friend = {
+    lastName: "Saxena", // property
+    currentClass: "Javascript", // property
+    name: "Mayank", // property
+}
+// friend is a variable that is set to an object with 3 properties
+
+// information is grouped together
+
+// Access info in an object
+friend.name
+friend.currentClass
 
 // Objects are burritos
+// {} tortillas
+// Objects do not have an order, they have properties
 
 
-const gameBoard = [
-    [null, null, "queen", null, null],
-    [null, "king", null, null, null],
-]
-
-gameBoard[1][1]
-
-
-// COMES OUT TO AN OBJECT.propertyName
+// If friend is a let variable instead of a const variable
+// we could throw out the object and put in something entirely different
+friend = 3
 
 
 
-let tasks = [
+// DATA TYPES
+// boolean
+// string
+// number
+// null/undefined
+// array
+// object
+
+
+
+
+// REAL WORLD
+// ecommerce
+
+const products = [
     {
-        text: "Laundry",
-        tags: [
-            "home",
-            "annoying"
-        ]
+        id: 0,
+        title: "Special Shoes",
+        brand: "Nike",
+        price: 500
     },
     {
-        text: "Emails",
-        tags: [
-            "work"
-        ]
-    },
+        id: 1,
+        title: "Shirt",
+        brand: "Adidas",
+        price: 30
+    }
 ]
 
-let message = "Here are your tasks:\n\n"
+const itemsInCart = [
+    {
+        id: 0,
+        quantity: 3,
+        product: {
+            id: 0,
+            title: "Special Shoes",
+            brand: "Nike",
+            price: 500
+        }
+    }
+]
 
-for(let i = 0; i < tasks.length; i++) {
-    // Another option: We could do this: const task = tasks[i] and then task.text on the next line
-    // message += task.text + " (" + task.tags.join(", ") + ")\n"
+// The brand of the product of the first item of the cart
+// The first cart item's product's brand
+itemsInCart[0].product.brand
 
-    message += tasks[i].text + " (" + tasks[i].tags.join(", ") + ")\n"
 
-    // Another option: message += `${tasks[i].text} (${tasks[i].tags.join(", ")})\n`
+const jsonString = `{
+  "name": "Patrick",
+  "address": {
+    "city": "Atlanta",
+    "state": "Georgia",
+    "zipCode": 88343
+  },
+  "procedures": [
+    {
+        "id": 0,
+        "type": "surgery"
+    }
+  ]
+}`
+// backticks `` quotation marks "" single quotation marks '' all produce a string
+// parse from JSON (parse from a string in JSON format)
+// parse means turn it from one format into another
+
+const patient = JSON.parse(jsonString)
+// patient will be this:
+// const patientWillBe = {
+//   "name": "Patrick",
+//   "address": {
+//     "city": "Atlanta",
+//     "state": "Georgia",
+//     "zipCode": 88343
+//   },
+//   "procedures": [
+//     {
+//         "id": 0,
+//         "type": "surgery"
+//     }
+//   ]
+// }
+console.log(patient)
+
+
+const arrayJsonString = `[
+    {
+        "id": 0,
+        "title": "Special Shoes",
+        "brand-name": "Nike",
+        "price": 500
+    },
+    {
+        "id": 1,
+        "title": "Shirt",
+        "brand-name": "Adidas",
+        "price": 30
+    }
+]`
+
+const parsedArray = JSON.parse(arrayJsonString)
+
+// Weird thing
+// Indexing into an object at a property name
+// Because we can't do this: parsedArray[0].brand-name
+parsedArray[0]["brand-name"]
+
+
+async function fetchData() {
+    // Hey superheroapi.com, can I have your data?
+    // We get a string in JSON format
+    const heroJSONString = await fetch(
+        "https://www.superheroapi.com/api.php/1079471338910705/731"
+    ).then((response) => response.text());
+
+    // Now it's Javascriptified to actually access the properties and things
+    const heroObject = JSON.parse(heroJSONString)
+
+    console.log(heroObject.name)
+}
+fetchData()
+
+
+
+
+// OOP = let's make everything an object
+// Let's make a class to make an object with
+
+// Making an object by hand:
+const madeByHandProduct = {
+    id: 0,
+    title: "Special Shoes",
+    brand: "Nike",
+    price: 500
+}
+const madeByHandProduct2 = {
+    id: 0,
+    title: "Shirt",
+    brand: "Adidas",
+    price: 30
 }
 
-console.log(message)
-
-// Here are your tasks:
-// * Laundry (home, annoying)
-// * Emails (work)
-
-
-// JSON is a data storage format
-// alternatives are: Excel, SQL, CSV, Access, XML
-
-const jsonString = '[{"text": "Laundry","tags": ["home","annoying"]},{"text": "Emails","tags": ["work"]}]'
-
-const csvString = "text,Laundry,tags,home,annoying"
-
-const jsonString2 = `
-[{
-  "id": 1,
-  "first_name": "Harper",
-  "last_name": "Arnould",
-  "email": "harnould0@360.cn",
-  "gender": "Male",
-  "ip_address": "234.39.191.38"
-}, {
-  "id": 2,
-  "first_name": "Maia",
-  "last_name": "Glazyer",
-  "email": "mglazyer1@topsy.com",
-  "gender": "Female",
-  "ip_address": "196.56.123.101"
-}, {
-  "id": 3,
-  "first_name": "Raphaela",
-  "last_name": "Reding",
-  "email": "rreding2@yellowpages.com",
-  "gender": "Female",
-  "ip_address": "90.176.136.241"
-}, {
-  "id": 4,
-  "first_name": "Ricki",
-  "last_name": "McInerney",
-  "email": "rmcinerney3@mashable.com",
-  "gender": "Female",
-  "ip_address": "114.215.154.113"
+// A very weird way to make an object
+const weirdlyMadeProduct = {
+    // this is an empty object
 }
-`
-JSON.parse(jsonString)
+weirdlyMadeProduct.id = 0
+weirdlyMadeProduct.title = "Special Shoes"
+weirdlyMadeProduct.brand = "Nike"
+weirdlyMadeProduct.price = 500
 
+// Classes are like a blueprint or a recipe
+// It's a plan for how to make things
 
+// class names ALWAYS start with a capital letter
+class Product {
+    // A function that builds the object for us
+    // constructor() {
+    //     // Use "this" which means the object we're building
+    //     // "this" is basically like weirdlyMadeProduct
+    //     this.id = 0
+    //     this.title = "Special Shoes"
+    //     this.brand = "Nike"
+    //     this.price = 500
+    // }
 
-// JSON and Error Handling
-JSON.parse(jsonString)
-JSON.stringify(tasks)
-
-try {
-  // code that could error and you can't prevent it
-} catch(error) {
-  // what to do if it does error
+    // constructor is special for classes, we never use it anywhere else
+    // has to be called constructor
+    constructor(title, brand, price) { // title = "Special Shoes"
+        // Use "this" which means the object we're building
+        // "this" is basically like weirdlyMadeProduct
+        this.id = 0
+        this.title = title
+        this.brand = brand
+        this.price = price
+    }
 }
 
-// this will go with fetching code in Week 5
+const classMadeProduct = new Product("Special Shoes", "Nike", 500)
+const classMadeProduct2 = new Product("Shirt", "Adidas", 30)
+
+// When you see "new ClassName" think "constructor of that Class"
+
+console.log(madeByHandProduct)
+console.log(weirdlyMadeProduct)
+console.log(classMadeProduct)
+
+console.log(classMadeProduct.id) // THIS WORKS
+console.log(Product.id) // DOES NOT WORK
 
 
 
+// OOP says EVERY FUNCTION SHOULD BE A METHOD
+// Method is just a fancy word for a function that's in a property (or ON an object)
+// OOP is just a way to structure and organize the code it doesn't provide or remove functionality
 
-// Object Oriented = structure of code where all the functions are attached to objects
-// Extremely object oriented: Java
-// Javascript is much more Function-oriented (Functional programming)
+class ColorGuessingGame {
 
-
-// Class = blueprint for an object that we can use to stamp out new objects
-// method = function that's in a property
-
-class User {
-    // constructor is the code to run to construct the object's properties
-    constructor(userName, userAge) {
-        this.name = userName
-        this.age = userAge
-        this.sayHi1 = function() { console.log("Hello!") }
+    playGame() {
+        const correct = this.checkGuess()
     }
 
-    sayHi2() { console.log("Hello!") }
-}
-
-// new ClassName() think constructor()
-const user1 = new User("Natalie", 35)
-const user2 = { name: "Natalie", age: 35, sayHi1: function() { console.log("Hello!") }, sayHi2: function() { console.log("Hello!") } }
-
-console.log(user1)
-console.log(user2)
-
-
-// METHODS
-
-// OOP: Why put functions on an object? For organization
-// Object oriented most common outside of Javascript
-
-class UserPerson {
-    // constructor is the code to run to construct the object's properties
-    constructor(userName, userAge) {
-        this.name = userName
-        this.age = userAge
-        this.sayHi1 = function() { console.log("Hello!") }
-    }
-
-    // This is not common in Javascript but it is outside of it!
-    setAge(newAge) { 
-        this.age = newAge 
+    checkGuess() {
+        return true 
     }
 }
 
-// Remix or a sample of another class
-class AdminUser extends UserPerson {
-    constructor(userName, userAge, adminStatus) {
-        super(userName, userAge) // call the constructor of what I extend
-        this.adminStatus = adminStatus
-    }
+const game = new ColorGuessingGame()
+game.playGame()
+
+// Concepts
+// Polymorphism
+// Inheritance
+// Encapsulation
+
+// NON OOP
+
+function playGame() {
+    const correct = checkGuess()
 }
 
-// Modern Javascript: Why put functions on an object? To pass functions around
-// Function oriented most common inside Javascript
-
-const dataForCopyButton = {
-    text: "Copy",
-    color: "gray",
-    onClick: function() { console.log("Copied the text!") }
+function checkGuess() {
+    return true
 }
 
-const dataForPasteButton = {
-    text: "Paste",
-    color: "darkgray",
-    onClick: function() { console.log("Pasted!") }
-}
+playGame()
+
+// Concepts
+// Functional Programming (kind of)
+// pure functions
+// immutable state
+// type system
+// modules
+// callbacks
+// asynchronous
+
+
+// try catch is used when there's a possible error that you CANNOT prevent
+// The classic one is the internet going out
+// Talking across the internet can error out if the internet goes out
+
+// If you're going to throw make sure that something will catch it
 
 
 
-// Javascript Data Types
+// PASSED BY REFERENCE
 
-// Passed by Value
+// DATA TYPES PASSED BY VALUE
 // boolean
 // string
 // number
 
-let myAge = 35
-let spouseAge = myAge // copies the value 35 into spouseAge
-myAge++
-console.log(myAge) // 36
-console.log(spouseAge) // 35
-
-// Passed by Reference
-// Why? Because they're huge
-// object
+// DATA TYPES PASSED BY REFERENCE
 // array
+// object
 
-let myFavoriteMusic = ["Taylor Swift", "Sabrina Carpenter"]
-let daughterFavorite = myFavoriteMusic // points this variable to the same array
-myFavoriteMusic.push("Heavy Metal")
-console.log(myFavoriteMusic) // ["Taylor Swift", "Sabrina Carpenter", "Heavy Metal"]
-console.log(daughterFavorite) // ["Taylor Swift", "Sabrina Carpenter", "Heavy Metal"]
+
+// Passed by value means it's copied into a new variable
+
+let myAge = 33
+let mitchellsAge = myAge // copy 33 into mitchellsAge
+
+myAge++
+
+console.log(myAge) // 34
+console.log(mitchellsAge) // 33
+
+
+// Passed by reference means both variables are pointed to the same thing
+
+let myHouse = { address: "123 main st", color: "blue" }
+let mitchellsHouse = myHouse // points mitchellsHouse to the object on line 315
+
+myHouse.color = "bright pink"
+
+console.log(myHouse) // { address: "123 main st", color: "brightPink" }
+console.log(mitchellsHouse) // { address: "123 main st", color: "brightPink" }
+
+
+
+// How this effects const
+
+const age = 3
+age++ // error because reassign
+
+const user = { age: 3}
+user.age++ // no error because no reassign of user, just reassign of the age property
+user = { age: 4 } // error because reassign
+
+
+const list = ["a", "b", "c"]
+list.push("d") // no reassign, all good
+list = ["a", "b", "c", "d"] // reassign, no good
+
+
+if((["a", "b"]) === (["a", "b"])) { // FALSE
+    alert("This is impossible!")
+}
+
+
+// You text your friend a picture and it's passed by value
+// If they draw a moustache on the picture you don't see that on your phone
+// You text your friend a map pointer and it's passed by reference
+// If they draw a moustache on the restaurant you see that when you go there
+
+
+// This is how we would make it by hand
+const reactBootcamp = {
+    name: "React",
+    level: "Advanced",
+    students: [
+
+    ],
+    registerStudents() {
+        // code here
+    },
+    listStudents() {
+        // code here
+    }
+}
+
+// If the array is empty
+if(reactBootcamp.students.length === 0) {
+    
+}

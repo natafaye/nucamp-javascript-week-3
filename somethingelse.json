@@ -1,0 +1,14 @@
+{
+  "name": "Patrick",
+  "address": {
+    "city": "Atlanta",
+    "state": "Georgia",
+    "zipCode": 88343
+  },
+  "procedures": [
+    {
+        "id": 0,
+        "type": "surgery"
+    }
+  ]
+}
